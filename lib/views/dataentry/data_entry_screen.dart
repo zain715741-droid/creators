@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:creater_project/controllers/user_ctrl.dart';
-import 'package:creater_project/views/Display/display_screen.dart';
 import 'package:creater_project/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -82,7 +81,7 @@ class DataEntryScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     ctrl.saveData();
-                    Get.to(() => DisplayScreen());
+                    Get.back(); // DisplayScreen() ki jagah — wapas ListScreen pe chale jao
                     Get.snackbar('Info', 'Profile has been saved');
                   },
                   child: const Text('Submit'),

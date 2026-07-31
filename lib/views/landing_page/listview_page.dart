@@ -28,9 +28,10 @@ body: Column(
       padding: const EdgeInsets.all(12.0),
       child: ListView.builder(
           itemCount: 100,
-          itemBuilder: (
-          BuildContext context,int i
-        ){ return Container(
+          itemBuilder: 
+          (BuildContext context,int i)
+          {
+          return Container(
           margin: const EdgeInsets.symmetric(vertical: 6.0),
                       decoration: BoxDecoration(
                         color: Colors.white, // <-- alag color
