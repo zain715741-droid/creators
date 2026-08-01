@@ -17,6 +17,15 @@ class UserCtrl extends GetxController {
 
   // YE SABSE ZAROORI HAI - saari entries ki list
   RxList entries = [].obs;
+  var searchText = ''.obs;
+
+  List get filteredEntries {
+  if (searchText.value.isEmpty) return entries;
+  return entries.where((entry) {
+    final name = (entry['name'] ?? '').toString().toLowerCase();
+    return name.contains(searchText.value.toLowerCase());
+  }).toList();
+}
 
   @override
   void onInit() {
@@ -32,6 +41,11 @@ class UserCtrl extends GetxController {
       image.value = pickedFile;
     }
   }
+
+
+  void deleteEntry(int index) {
+  entries.removeAt(index);
+  box.write('entries', entries.toList());}
 
   void saveData() {
     // Ek naya "packet" (Map) banaya jisme is entry ki saari cheezein hain

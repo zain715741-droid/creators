@@ -1,5 +1,5 @@
 import 'package:creater_project/controllers/user_ctrl.dart';
-import 'package:creater_project/views/dataentry/data_detail.dart';
+import 'package:creater_project/views/list_screen/list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -20,6 +20,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // final box = GetStorage();
     return GetMaterialApp(
-home: EntryDetailScreen (entry: {},), debugShowCheckedModeBanner: false,); 
+home: ListScreen(), debugShowCheckedModeBanner: false,); 
   }
 }
