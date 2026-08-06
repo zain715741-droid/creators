@@ -1,4 +1,5 @@
 // import 'dart:js_interop';
+import 'package:creater_project/controllers/loginctrl.dart';
 import 'package:creater_project/controllers/splash_ctrl.dart';
 import 'package:creater_project/utils/app_images.dart';
 import 'package:creater_project/views/landing_page/landing_page.dart';
@@ -12,8 +13,7 @@ import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
    LoginPage({super.key});
-  final SplashCtrl ctrl = Get.put(SplashCtrl());
-
+  // final SplashCtrl ctrl = Get.put(SplashCtrl());
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -29,6 +29,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context,) {
+      final Loginctrl loginctrl = Get.put(Loginctrl());
+
     return Scaffold(
       //  backgroundColor:  Colors.cyanAccent,
       // appBar: AppBar(title: Text(''),),
@@ -116,9 +118,10 @@ body:SafeArea(
                       ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Login Successfully')),
               );
+              loginctrl.loginbutton(enteredEmail, enteredPassword);
                       setState((
                       ) {
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=> LandingPage( email:enteredEmail, password: enteredPassword, )));
+                         
                       });
                          emailctrl.clear();
                          passwordctrl.clear();

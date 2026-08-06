@@ -1,4 +1,5 @@
 import 'package:creater_project/controllers/user_ctrl.dart';
+import 'package:creater_project/views/login%20page/login_page.dart';
 import 'package:creater_project/views/signup/signup.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // final box = GetStorage();
     return GetMaterialApp(
-home: Signup(), debugShowCheckedModeBanner: false,); 
+home: LoginPage(), debugShowCheckedModeBanner: false,); 
   }
 }
