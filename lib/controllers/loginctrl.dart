@@ -1,9 +1,27 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Loginctrl extends GetxController{
   final TextEditingController ctrl1 = TextEditingController();
   final TextEditingController ctrl2 = TextEditingController();
+
+ void signupbutton(){
+  final auth = FirebaseAuth.instance;
+
+  auth.
+  createUserWithEmailAndPassword(
+    email: ctrl1.text,
+    password: ctrl2.text,
+  ).then((value) {
+    Get.snackbar('Success', 'Account created successfully');
+  }).catchError((error) {
+    Get.snackbar('Error', error.toString());
+  });
+
+ }
+
+
   RxString name = "ghasugwie".obs;
   RxDouble result = 0.0.obs;
 

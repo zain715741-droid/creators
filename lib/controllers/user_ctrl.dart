@@ -60,9 +60,10 @@ class UserCtrl extends GetxController {
 
     // Naya packet list ke END mein add kiya
     entries.add(newEntry);
+    
     // Poori list (sab purani + ye nayi entry) permanently save ki
     box.write('entries', entries.toList());
-    
+
     // Fields ko khali kar do taake agli entry ke liye form saaf ho
     namectrl.clear();
     agectrl.clear();

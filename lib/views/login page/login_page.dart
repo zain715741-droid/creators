@@ -137,8 +137,7 @@ body:SafeArea(
                         setState(()  {
                              Navigator.push(context,MaterialPageRoute(builder: (context)=> Signup()));
                           });
-                           
-                            }
+                        }
                         
                         
                         , child: Text('Create a new Account',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),

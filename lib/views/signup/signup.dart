@@ -1,8 +1,11 @@
+import 'package:creater_project/controllers/loginctrl.dart';
 import 'package:creater_project/utils/app_images.dart';
 import 'package:creater_project/views/login%20page/login_page.dart' show LoginPage;
 import 'package:creater_project/widgets/custom_text.dart' show CustomTextWidget;
 import 'package:creater_project/widgets/custom_textfield.dart' show CustomTextField;
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -14,11 +17,14 @@ class Signup extends StatefulWidget {
 class _SignupState extends State<Signup> {
   final TextEditingController emailctrl=TextEditingController();
   final TextEditingController passwordctrl=TextEditingController();
-  final TextEditingController phonectrl=TextEditingController();
-  final TextEditingController bloodctrl=TextEditingController(); 
+  // final TextEditingController phonectrl=TextEditingController();
+  // final TextEditingController bloodctrl=TextEditingController(); 
   final _formkey=GlobalKey<FormState>();
   final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
   bool show=true;
+
+  final Loginctrl ctrl = Get.put(Loginctrl());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +58,7 @@ body:Container(
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: CustomTextField(text: 'text', controller: emailctrl, keyboardType:TextInputType.text, hintText: 'Email',
+                child: CustomTextField(text: 'text', controller: ctrl.ctrl1, keyboardType:TextInputType.text, hintText: 'Email',
                  validator: (value) { 
                     if(value == null || value.isEmpty){
                     return('Email required');
@@ -65,7 +71,7 @@ body:Container(
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0), 
-                child: CustomTextField(text: 'text', controller: passwordctrl, keyboardType: TextInputType.text, hintText: 'Password',suffixicon: InkWell(
+                child: CustomTextField(text: 'text', controller: ctrl.ctrl2, keyboardType: TextInputType.text, hintText: 'Password',suffixicon: InkWell(
                   onTap:() {
                     setState(() {
                       show =! show;
@@ -86,21 +92,23 @@ body:Container(
               )),
                 
                 
-                Padding(
-                padding: const EdgeInsets.all(8.0), 
-                child: CustomTextField(text: 'text', controller: phonectrl, keyboardType: TextInputType.number, hintText: 'Phone Number',         
-                )),
+              //   Padding(
+              //   padding: const EdgeInsets.all(8.0), 
+              //   child: CustomTextField(text: 'text', controller: phonectrl, keyboardType: TextInputType.number, hintText: 'Phone Number',         
+              //   )),
                
                
-                Padding(
-                padding: const EdgeInsets.all(8.0), 
-                child: CustomTextField(text: 'text', controller: bloodctrl, keyboardType: TextInputType.text, hintText: 'Blood Group',
-              )),
+              //   Padding(
+              //   padding: const EdgeInsets.all(8.0), 
+              //   child: CustomTextField(text: 'text', controller: bloodctrl, keyboardType: TextInputType.text, hintText: 'Blood Group',
+              // )),
           
           
                 Padding(
                   padding: const EdgeInsets.only(left: 200,top: 20),
                   child: ElevatedButton( onPressed:(){
+                       ctrl.signupbutton();
+
                                        
                        if (_formkey.currentState!.validate()) {
                 
@@ -108,6 +116,7 @@ body:Container(
                           const SnackBar(content: Text('Signup Successfully')),);
                     setState(() {
                        Navigator.push(context,MaterialPageRoute(builder: (context)=> LoginPage( )));
+    
                     });
                       
                       }

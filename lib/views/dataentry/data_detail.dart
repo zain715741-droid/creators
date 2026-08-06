@@ -41,7 +41,7 @@ class EntryDetailScreen extends StatelessWidget {
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
-                decoration: BoxDecoration(
+                decoration: BoxDecoration(        
                   gradient: LinearGradient(
                     colors: [accent, accent.withOpacity(0.7)],
                     begin: Alignment.topCenter,
