@@ -1,13 +1,36 @@
+// ignore_for_file: avoid_print
+
 import 'package:creater_project/views/landing_page/landing_page.dart';
 import 'package:creater_project/views/login%20page/login_page.dart';
+import 'package:creater_project/views/signup/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class Loginctrl extends GetxController{
+
+  final box = GetStorage();
   final TextEditingController ctrl1 = TextEditingController();
   final TextEditingController ctrl2 = TextEditingController();
    
+@override
+void onInit() {
+  super.onInit();
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    checkSignupStatus();
+  });
+}
+    void checkSignupStatus() {
+    final bool isSignedUp = box.read('isSignedUp') ?? false;
+    if (isSignedUp) {
+      Get.offAll(() => LoginPage());
+    } else {
+      Get.offAll(() => const Signup());
+    }
+  }
+
+
  void signupbutton(){
   final auth = FirebaseAuth.instance;
 
@@ -17,6 +40,7 @@ class Loginctrl extends GetxController{
     password: ctrl2.text,
   ).then((value) {
     Get.snackbar('Success', 'Account created successfully');
+    box.write('isSignedUp', true);
     print(auth.currentUser?.email);
     print(auth.currentUser?.uid);
     // print(auth.currentUser?.);
@@ -26,6 +50,7 @@ class Loginctrl extends GetxController{
 
  }
 
+ // ignore: strict_top_level_inference
  Future loginbutton( email , passs )async{
 final auth =  FirebaseAuth.instance;
  try {await auth.signInWithEmailAndPassword(email: email, password: passs).then((value) {
@@ -43,9 +68,7 @@ final auth =  FirebaseAuth.instance;
     }
   } catch (e) {
     Get.snackbar('Error', e.toString());
-  }
-  
-  
+  } 
  }
 
 

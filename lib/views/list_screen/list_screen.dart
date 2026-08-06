@@ -1,3 +1,5 @@
+// ignore_for_file: duplicate_ignore, deprecated_member_use
+
 import 'dart:io';
 import 'package:creater_project/views/dataentry/data_detail.dart';
 import 'package:creater_project/controllers/user_ctrl.dart';
@@ -44,6 +46,7 @@ class ListScreen extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(14),
                 boxShadow: [
+                  // ignore: deprecated_member_use
                   BoxShadow(color: accent.withOpacity(0.1), blurRadius: 10, offset: const Offset(0, 4)),
                 ],
               ),
@@ -83,7 +86,7 @@ class ListScreen extends StatelessWidget {
               return ListView.separated(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                 itemCount: list.length,
-                separatorBuilder: (_, __) => const SizedBox(height: 18),
+                separatorBuilder: (_, _) => const SizedBox(height: 18),
                 itemBuilder: (context, index) {
                   final entry = list[index];
                   final hasImage = entry['imagePath'] != null && entry['imagePath'] != '';

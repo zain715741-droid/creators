@@ -1,3 +1,5 @@
+// ignore_for_file: duplicate_ignore, deprecated_member_use
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 
@@ -14,6 +16,7 @@ class EntryDetailScreen extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(8),
+            // ignore: deprecated_member_use
             decoration: BoxDecoration(color: accent.withOpacity(0.1), borderRadius: BorderRadius.circular(10)),
             child: Icon(icon, size: 18, color: accent),
           ),
