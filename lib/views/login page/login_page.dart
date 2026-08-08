@@ -242,15 +242,11 @@ child: Stack(
                       HapticFeedback.vibrate();
 
                       final enteredEmail = emailctrl.text;
-                      final enteredPassword =
-                          passwordctrl.text;
+                      final enteredPassword = passwordctrl.text;
 
                       if (_formkey.currentState!
                           .validate()) {
-                        loginctrl.loginbutton(
-                          enteredEmail,
-                          enteredPassword,
-                        );
+                        loginctrl.loginbutton( enteredEmail,  enteredPassword );
 
                         emailctrl.clear();
                         passwordctrl.clear();

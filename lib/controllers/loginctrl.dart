@@ -72,6 +72,20 @@ final auth =  FirebaseAuth.instance;
  }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   RxString name = "ghasugwie".obs;
   RxDouble result = 0.0.obs;
 
