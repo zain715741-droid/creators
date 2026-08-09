@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:creater_project/views/landing_page/landing_page.dart';
 import 'package:creater_project/views/login%20page/login_page.dart';
 import 'package:creater_project/views/signup/signup.dart';
@@ -13,7 +14,7 @@ class Loginctrl extends GetxController{
   final box = GetStorage();
   final TextEditingController ctrl1 = TextEditingController();
   final TextEditingController ctrl2 = TextEditingController();
-   
+     final firebaseFirestore = FirebaseFirestore.instance;
 @override
 void onInit() {
   super.onInit();
@@ -39,11 +40,20 @@ void onInit() {
     email: ctrl1.text,
     password: ctrl2.text,
   ).then((value) {
+        firebaseFirestore.collection('student').doc(auth.currentUser?.uid).set({
+          'email': ctrl1.text,
+          'uid': auth.currentUser?.uid,
+          'password': ctrl2.text,
+
+
+
+          
+        });
+
     Get.snackbar('Success', 'Account created successfully');
     box.write('isSignedUp', true);
     print(auth.currentUser?.email);
     print(auth.currentUser?.uid);
-    // print(auth.currentUser?.);
   }).catchError((error) {
     Get.snackbar('Error', error.toString());
   });
@@ -55,6 +65,7 @@ void onInit() {
 final auth =  FirebaseAuth.instance;
  try {await auth.signInWithEmailAndPassword(email: email, password: passs).then((value) {
     Get.snackbar('Success', 'Login successful');
+    box.write('isSignedUp', true);
     Get.to(() => LandingPage());
   });} on FirebaseAuthException catch (e) {
     print('Login failed: ${e.message}');
