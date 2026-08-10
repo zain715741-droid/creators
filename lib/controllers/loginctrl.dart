@@ -50,13 +50,12 @@ class Loginctrl extends GetxController {
     final auth = FirebaseAuth.instance;
 
     try {
-      UserCredential userCredential =
           await auth.createUserWithEmailAndPassword(
         email: emailCtrl.text,
         password: passwordCtrl.text,
       );
 
-      final String uid = userCredential.user!.uid;
+      final uid = auth.currentUser?.uid;
       await firebaseFirestore.collection('student').doc(uid).set({
         'name': nameCtrl.text,
         'email': emailCtrl.text,
