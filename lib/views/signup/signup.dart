@@ -161,7 +161,7 @@ class _SignupState extends State<Signup> {
 
                           const SizedBox(height: 35),
 
-                          // ================= NAME =================
+                         
 
                           CustomTextField(
                             text: 'text',
@@ -178,7 +178,7 @@ class _SignupState extends State<Signup> {
 
                           const SizedBox(height: 20),
 
-                          // ================= EMAIL =================
+                        
 
                           CustomTextField(
                             text: 'text',
@@ -200,8 +200,7 @@ class _SignupState extends State<Signup> {
 
                           const SizedBox(height: 20),
 
-                          // ================= PHONE =================
-
+                         
                           CustomTextField(
                             text: 'text',
                             controller: ctrl.phoneCtrl,
@@ -222,7 +221,7 @@ class _SignupState extends State<Signup> {
 
                           const SizedBox(height: 20),
 
-                          // ================= CNIC =================
+          
 
                           CustomTextField(
                             text: 'text',
@@ -244,7 +243,7 @@ class _SignupState extends State<Signup> {
 
                           const SizedBox(height: 20),
 
-                          // ================= BLOOD GROUP =================
+                         
 
                           CustomTextField(
                             text: 'text',
@@ -277,7 +276,7 @@ class _SignupState extends State<Signup> {
                                 showPassword
                                     ? Icons.visibility_off
                                     : Icons.visibility,
-                                color: Colors.white,
+                                color: const Color.fromARGB(255, 1, 1, 1),
                               ),
                               onPressed: () {
                                 setState(() {
@@ -301,7 +300,7 @@ class _SignupState extends State<Signup> {
 
                           const SizedBox(height: 20),
 
-                          // ================= CONFIRM PASSWORD =================
+                        
 
                           CustomTextField(
                             text: 'text',
@@ -316,7 +315,7 @@ class _SignupState extends State<Signup> {
                                 showConfirmPassword
                                     ? Icons.visibility_off
                                     : Icons.visibility,
-                                color: Colors.white,
+                                color: const Color.fromARGB(255, 10, 6, 6),
                               ),
                               onPressed: () {
                                 setState(() {
@@ -341,7 +340,7 @@ class _SignupState extends State<Signup> {
 
                           const SizedBox(height: 30),
 
-                          // ================= SIGNUP BUTTON =================
+                         
 
                           SizedBox(
                             width: double.infinity,

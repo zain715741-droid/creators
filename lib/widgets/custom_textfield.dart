@@ -58,17 +58,38 @@ class CustomTextField extends StatelessWidget {
 
         suffixIcon: suffixicon,
 
-        prefixIcon: hintText == "Email"
+        prefixIcon: hintText == "Email" ? const Icon(Icons.email_outlined,color: Color(0xff667EEA),)
+       : hintText == "Password"
+        ? const Icon(
+            Icons.lock_outline,
+            color: Color(0xff667EEA),
+          )
+        : hintText == "Full Name"
             ? const Icon(
-                Icons.email_outlined,
+                Icons.person_outline,
                 color: Color(0xff667EEA),
               )
-            : hintText == "Password"
+            : hintText == "Phone Number"
                 ? const Icon(
-                    Icons.lock_outline,
+                    Icons.phone_outlined,
                     color: Color(0xff667EEA),
                   )
-                : null,
+                : hintText == "CNIC"
+                    ? const Icon(
+                        Icons.badge_outlined,
+                        color: Color(0xff667EEA),
+                      )
+                    : hintText!.startsWith("Blood Group")
+                        ? const Icon(
+                            Icons.bloodtype_outlined,
+                            color: Color(0xff667EEA),
+                          )
+                        : hintText == "Confirm Password"
+                            ? const Icon(
+                                Icons.lock_outline,
+                                color: Color(0xff667EEA),
+                              )
+                            : null,
 
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
