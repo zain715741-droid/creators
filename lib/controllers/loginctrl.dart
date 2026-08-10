@@ -9,21 +9,34 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class Loginctrl extends GetxController{
-
+class Loginctrl extends GetxController {
   final box = GetStorage();
+
+  final TextEditingController nameCtrl = TextEditingController();
+  final TextEditingController emailCtrl = TextEditingController();
+  final TextEditingController phoneCtrl = TextEditingController();
+  final TextEditingController cnicCtrl = TextEditingController();
+  final TextEditingController bloodCtrl = TextEditingController();
+  final TextEditingController passwordCtrl = TextEditingController();
+  final TextEditingController confirmPasswordCtrl = TextEditingController();
+
+
   final TextEditingController ctrl1 = TextEditingController();
   final TextEditingController ctrl2 = TextEditingController();
-     final firebaseFirestore = FirebaseFirestore.instance;
-@override
-void onInit() {
-  super.onInit();
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    checkSignupStatus();
-  });
-}
-    void checkSignupStatus() {
+
+  final firebaseFirestore = FirebaseFirestore.instance;
+
+  @override
+  void onInit() {
+    super.onInit();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkSignupStatus();
+    });
+  }
+
+  void checkSignupStatus() {
     final bool isSignedUp = box.read('isSignedUp') ?? false;
+
     if (isSignedUp) {
       Get.offAll(() => LoginPage());
     } else {
@@ -32,56 +45,148 @@ void onInit() {
   }
 
 
- void signupbutton(){
-  final auth = FirebaseAuth.instance;
 
-  auth.
-  createUserWithEmailAndPassword(
-    email: ctrl1.text,
-    password: ctrl2.text,
-  ).then((value) {
-        firebaseFirestore.collection('student').doc(auth.currentUser?.uid).set({
-          'email': ctrl1.text,
-          'uid': auth.currentUser?.uid,
-          'password': ctrl2.text,
+  Future<void> signupbutton() async {
+    final auth = FirebaseAuth.instance;
 
+    try {
+      // Create Firebase Authentication account
+      UserCredential userCredential =
+          await auth.createUserWithEmailAndPassword(
+        email: emailCtrl.text.trim(),
+        password: passwordCtrl.text.trim(),
+      );
 
+      final String uid = userCredential.user!.uid;
 
-          
-        });
+      // Save user information in Firestore
+      await firebaseFirestore.collection('student').doc(uid).set({
+        'uid': uid,
+        'name': nameCtrl.text.trim(),
+        'email': emailCtrl.text.trim(),
+        'phone': phoneCtrl.text.trim(),
+        'cnic': cnicCtrl.text.trim(),
+        'bloodGroup': bloodCtrl.text.trim(),
+        'createdAt': FieldValue.serverTimestamp(),
+      });
 
-    Get.snackbar('Success', 'Account created successfully');
-    box.write('isSignedUp', true);
-    print(auth.currentUser?.email);
-    print(auth.currentUser?.uid);
-  }).catchError((error) {
-    Get.snackbar('Error', error.toString());
-  });
+      // Save signup status locally
+      await box.write('isSignedUp', true);
 
- }
+      Get.snackbar(
+        'Success',
+        'Account created successfully',
+        snackPosition: SnackPosition.BOTTOM,
+      );
 
- // ignore: strict_top_level_inference
- Future loginbutton( email , passs )async{
-final auth =  FirebaseAuth.instance;
- try {await auth.signInWithEmailAndPassword(email: email, password: passs).then((value) {
-    Get.snackbar('Success', 'Login successful');
-    box.write('isSignedUp', true);
-    Get.to(() => LandingPage());
-  });} on FirebaseAuthException catch (e) {
-    print('Login failed: ${e.message}');
-    print('Login failed: ${e.code}');
-    if (e.code == 'user-not-found') {
-      Get.snackbar('Error', 'No user found for that email.');
-    } else if (e.code == 'wrong-password') {
-      Get.snackbar('Error', 'Wrong password provided for that user.');
-    } else {
-      Get.snackbar('Error', e.message ?? 'An error occurred');
+      print('Account Created');
+      print('UID: $uid');
+      print('Email: ${emailCtrl.text}');
+
+      // Go to Login page
+      Get.offAll(() => LoginPage());
+    } on FirebaseAuthException catch (e) {
+      print('Signup Error: ${e.code}');
+      print(e.message);
+
+      if (e.code == 'email-already-in-use') {
+        Get.snackbar(
+          'Error',
+          'This email is already registered.',
+        );
+      } else if (e.code == 'weak-password') {
+        Get.snackbar(
+          'Error',
+          'Password is too weak.',
+        );
+      } else if (e.code == 'invalid-email') {
+        Get.snackbar(
+          'Error',
+          'Please enter a valid email.',
+        );
+      } else {
+        Get.snackbar(
+          'Error',
+          e.message ?? 'Signup failed.',
+        );
+      }
+    } catch (e) {
+      print('Error: $e');
+
+      Get.snackbar(
+        'Error',
+        'Something went wrong. Please try again.',
+      );
     }
-  } catch (e) {
-    Get.snackbar('Error', e.toString());
-  } 
- }
+  }
 
+
+
+  Future<void> loginbutton(email, passs) async {
+    final auth = FirebaseAuth.instance;
+
+    try {
+      await auth.signInWithEmailAndPassword(
+        email: email,
+        password: passs,
+      );
+
+      Get.snackbar(
+        'Success',
+        'Login successful',
+      );
+
+      await box.write('isSignedUp', true);
+
+      Get.offAll(() => LandingPage());
+    } on FirebaseAuthException catch (e) {
+      print('Login failed: ${e.message}');
+      print('Login failed: ${e.code}');
+
+      if (e.code == 'user-not-found') {
+        Get.snackbar(
+          'Error',
+          'No user found for that email.',
+        );
+      } else if (e.code == 'wrong-password') {
+        Get.snackbar(
+          'Error',
+          'Wrong password provided for that user.',
+        );
+      } else if (e.code == 'invalid-credential') {
+        Get.snackbar(
+          'Error',
+          'Invalid email or password.',
+        );
+      } else {
+        Get.snackbar(
+          'Error',
+          e.message ?? 'An error occurred',
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        e.toString(),
+      );
+    }
+  }
+
+  @override
+  void onClose() {
+    nameCtrl.dispose();
+    emailCtrl.dispose();
+    phoneCtrl.dispose();
+    cnicCtrl.dispose();
+    bloodCtrl.dispose();
+    passwordCtrl.dispose();
+    confirmPasswordCtrl.dispose();
+
+    ctrl1.dispose();
+    ctrl2.dispose();
+
+    super.onClose();
+  }
 
 
 

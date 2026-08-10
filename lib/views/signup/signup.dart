@@ -1,7 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:creater_project/controllers/loginctrl.dart';
-import 'package:creater_project/views/login%20page/login_page.dart' show LoginPage;
+import 'package:creater_project/views/login%20page/login_page.dart';
 import 'package:creater_project/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,11 +14,13 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-  // final TextEditingController phonectrl=TextEditingController();
-  // final TextEditingController bloodctrl=TextEditingController();
   final _formkey = GlobalKey<FormState>();
-  final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-  bool show = true;
+
+  final emailRegex =
+      RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+  bool showPassword = true;
+  bool showConfirmPassword = true;
 
   final Loginctrl ctrl = Get.put(Loginctrl());
 
@@ -29,6 +31,7 @@ class _SignupState extends State<Signup> {
         child: Container(
           width: double.infinity,
           height: double.infinity,
+
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -39,8 +42,10 @@ class _SignupState extends State<Signup> {
               ],
             ),
           ),
+
           child: Stack(
             children: [
+
               // Top Right Glow
               Positioned(
                 top: -120,
@@ -64,7 +69,12 @@ class _SignupState extends State<Signup> {
                   height: 320,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: const Color.fromARGB(255, 15, 234, 132).withOpacity(.18),
+                    color: const Color.fromARGB(
+                      255,
+                      15,
+                      234,
+                      132,
+                    ).withOpacity(.18),
                   ),
                 ),
               ),
@@ -78,7 +88,12 @@ class _SignupState extends State<Signup> {
                   height: 170,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: const Color.fromARGB(255, 5, 228, 38).withOpacity(.12),
+                    color: const Color.fromARGB(
+                      255,
+                      5,
+                      228,
+                      38,
+                    ).withOpacity(.12),
                   ),
                 ),
               ),
@@ -86,10 +101,13 @@ class _SignupState extends State<Signup> {
               Center(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.all(25),
+
                   child: Form(
                     key: _formkey,
+
                     child: Container(
                       padding: const EdgeInsets.all(25),
+
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(.18),
                         borderRadius: BorderRadius.circular(30),
@@ -101,13 +119,16 @@ class _SignupState extends State<Signup> {
                             color: Colors.black.withOpacity(.18),
                             blurRadius: 30,
                             offset: const Offset(0, 15),
-                          )
+                          ),
                         ],
                       ),
+
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          CircleAvatar(
+
+                          // Icon
+                          const CircleAvatar(
                             radius: 42,
                             backgroundColor: Colors.white,
                             child: Icon(
@@ -117,9 +138,9 @@ class _SignupState extends State<Signup> {
                             ),
                           ),
 
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
 
-                          Text(
+                          const Text(
                             "Create Account",
                             style: TextStyle(
                               color: Colors.white,
@@ -128,9 +149,9 @@ class _SignupState extends State<Signup> {
                             ),
                           ),
 
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
 
-                          Text(
+                          const Text(
                             "Signup to get started",
                             style: TextStyle(
                               color: Colors.white70,
@@ -138,145 +159,242 @@ class _SignupState extends State<Signup> {
                             ),
                           ),
 
-                          SizedBox(height: 35),
+                          const SizedBox(height: 35),
 
-                          // Email Field
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(18),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.12),
-                                  blurRadius: 18,
-                                  offset: const Offset(0, 8),
-                                ),
-                              ],
-                            ),
-                            child: CustomTextField(
-                              text: 'text',
-                              controller: ctrl.ctrl1,
-                              keyboardType: TextInputType.emailAddress,
-                              hintText: "Email",
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Email required';
-                                }
-                                if (!emailRegex.hasMatch(value)) {
-                                  return 'Sahi email likhein';
-                                }
-                                return null;
-                              },
-                            ),
+                          // ================= NAME =================
+
+                          CustomTextField(
+                            text: 'text',
+                            controller: ctrl.nameCtrl,
+                            keyboardType: TextInputType.name,
+                            hintText: "Full Name",
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'Name required';
+                              }
+                              return null;
+                            },
                           ),
 
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
 
-                          // Password
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(18),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.12),
-                                  blurRadius: 18,
-                                  offset: const Offset(0, 8),
-                                ),
-                              ],
-                            ),
-                            child: CustomTextField(
-                              text: 'text',
-                              controller: ctrl.ctrl2,
-                              keyboardType: TextInputType.text,
-                              hintText: "Password",
-                              obscureText: show,
-                              obscuringCharacter: '*',
-                              suffixicon: IconButton(
-                                icon: Icon(
-                                  show
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    show = !show;
-                                  });
-                                },
+                          // ================= EMAIL =================
+
+                          CustomTextField(
+                            text: 'text',
+                            controller: ctrl.emailCtrl,
+                            keyboardType: TextInputType.emailAddress,
+                            hintText: "Email",
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'Email required';
+                              }
+
+                              if (!emailRegex.hasMatch(value.trim())) {
+                                return 'Sahi email likhein';
+                              }
+
+                              return null;
+                            },
+                          ),
+
+                          const SizedBox(height: 20),
+
+                          // ================= PHONE =================
+
+                          CustomTextField(
+                            text: 'text',
+                            controller: ctrl.phoneCtrl,
+                            keyboardType: TextInputType.phone,
+                            hintText: "Phone Number",
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'Phone number required';
+                              }
+
+                              if (value.trim().length < 10) {
+                                return 'Valid phone number enter karein';
+                              }
+
+                              return null;
+                            },
+                          ),
+
+                          const SizedBox(height: 20),
+
+                          // ================= CNIC =================
+
+                          CustomTextField(
+                            text: 'text',
+                            controller: ctrl.cnicCtrl,
+                            keyboardType: TextInputType.number,
+                            hintText: "CNIC",
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'CNIC required';
+                              }
+
+                              if (value.trim().length != 13) {
+                                return 'CNIC must contain 13 digits';
+                              }
+
+                              return null;
+                            },
+                          ),
+
+                          const SizedBox(height: 20),
+
+                          // ================= BLOOD GROUP =================
+
+                          CustomTextField(
+                            text: 'text',
+                            controller: ctrl.bloodCtrl,
+                            keyboardType: TextInputType.text,
+                            hintText: "Blood Group (e.g. A+)",
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'Blood Group required';
+                              }
+
+                              return null;
+                            },
+                          ),
+
+                          const SizedBox(height: 20),
+
+                          // ================= PASSWORD =================
+
+                          CustomTextField(
+                            text: 'text',
+                            controller: ctrl.passwordCtrl,
+                            keyboardType: TextInputType.text,
+                            hintText: "Password",
+                            obscureText: showPassword,
+                            obscuringCharacter: '*',
+
+                            suffixicon: IconButton(
+                              icon: Icon(
+                                showPassword
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Colors.white,
                               ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return ('Password Required');
-                                }
-                                if (value.length <= 6) {
-                                  return ('Password Must be up to 6 characters');
-                                }
-                                return null;
+                              onPressed: () {
+                                setState(() {
+                                  showPassword = !showPassword;
+                                });
                               },
                             ),
+
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Password required';
+                              }
+
+                              if (value.length < 6) {
+                                return 'Password must be at least 6 characters';
+                              }
+
+                              return null;
+                            },
                           ),
 
-                          // Padding(
-                          //   padding: const EdgeInsets.all(8.0),
-                          //   child: CustomTextField(text: 'text', controller: phonectrl, keyboardType: TextInputType.number, hintText: 'Phone Number',
-                          // )),
+                          const SizedBox(height: 20),
 
-                          // Padding(
-                          //   padding: const EdgeInsets.all(8.0),
-                          //   child: CustomTextField(text: 'text', controller: bloodctrl, keyboardType: TextInputType.text, hintText: 'Blood Group',
-                          // )),
+                          // ================= CONFIRM PASSWORD =================
 
-                          SizedBox(height: 30),
+                          CustomTextField(
+                            text: 'text',
+                            controller: ctrl.confirmPasswordCtrl,
+                            keyboardType: TextInputType.text,
+                            hintText: "Confirm Password",
+                            obscureText: showConfirmPassword,
+                            obscuringCharacter: '*',
+
+                            suffixicon: IconButton(
+                              icon: Icon(
+                                showConfirmPassword
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  showConfirmPassword =
+                                      !showConfirmPassword;
+                                });
+                              },
+                            ),
+
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Confirm password required';
+                              }
+
+                              if (value != ctrl.passwordCtrl.text) {
+                                return 'Passwords do not match';
+                              }
+
+                              return null;
+                            },
+                          ),
+
+                          const SizedBox(height: 30),
+
+                          // ================= SIGNUP BUTTON =================
 
                           SizedBox(
                             width: double.infinity,
                             height: 55,
+
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.orange,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
+                                  borderRadius:
+                                      BorderRadius.circular(15),
                                 ),
                               ),
-                              onPressed: () {
-                                ctrl.signupbutton();
 
+                              onPressed: () async {
                                 if (_formkey.currentState!.validate()) {
-                                  // ScaffoldMessenger.of(context).showSnackBar(
-                                  //   const SnackBar(content: Text('Signup Successfully')),);
-                                  setState(() {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => LoginPage(),
-                                      ),
-                                    );
-                                  });
+                                  await ctrl.signupbutton();
                                 }
                               },
-                              child: Text('Signup'),
+
+                              child: const Text(
+                                'Signup',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ),
 
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
+
+                          // ================= LOGIN =================
 
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment:
+                                MainAxisAlignment.center,
+
                             children: [
-                              Text(
+
+                              const Text(
                                 "Already have an account?",
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
+
                               TextButton(
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => LoginPage(),
-                                    ),
-                                  );
+                                  Get.to(() => LoginPage());
                                 },
-                                child: Text(
+
+                                child: const Text(
                                   "Login",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
