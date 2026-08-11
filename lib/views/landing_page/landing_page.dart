@@ -13,7 +13,7 @@ class LandingPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xffF5F7FB),
       appBar: AppBar(
-        title: const Text('Students'),
+        title: const Text('Student list'),
         backgroundColor: const Color(0xff667EEA),
         foregroundColor: Colors.white,
       ),
@@ -29,15 +29,14 @@ class LandingPage extends StatelessWidget {
 
           final email = FirebaseAuth.instance.currentUser?.email;
 
-          final students = snapshot.data!.docs
-              .where((student) => student['email'] != email)
-              .toList();
+          final students = snapshot.data!.docs.where((student) => student['email'] != email).toList();
 
           return ListView.builder(
             padding: const EdgeInsets.all(12),
             itemCount: students.length,
             itemBuilder: (context, index) {
-              final student = students[index];
+          
+          final student = students[index];
 
               return Card(
                 elevation: 3,
@@ -61,16 +60,9 @@ class LandingPage extends StatelessWidget {
                     ),
                   ),
 
-                  title: Text(
-                    student['name'] ?? 'No Name',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  title: Text( student['name'] ?? 'No Name', style: const TextStyle(fontWeight: FontWeight.bold,),),
 
-                  subtitle: Text(
-                    '${student['email']}\n📱 ${student['phone']}',
-                  ),
+                  subtitle: Text( '${student['email']}\n${student['phone']}',),
 
                   trailing: Text(
                     student['bloodGroup'] ?? 'N/A',
