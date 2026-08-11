@@ -18,9 +18,7 @@ class LandingPage extends StatelessWidget {
         foregroundColor: Colors.white,
       ),
 
-      body: StreamBuilder(
-        stream: firestore,
-        builder: (context, snapshot) {
+      body: StreamBuilder(stream: firestore, builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -35,7 +33,8 @@ class LandingPage extends StatelessWidget {
             padding: const EdgeInsets.all(12),
             itemCount: students.length,
             itemBuilder: (context, index) {
-          
+              
+              
           final student = students[index];
 
               return Card(
@@ -271,4 +270,16 @@ class LandingPage extends StatelessWidget {
     
     );
   }
+}
+
+ 
+class usermodel{
+  String? name;
+  String? email;
+  String? phone;
+  String? bloodGroup;
+  String? cnic;
+
+  usermodel({this.name, this.email, this.phone, this.bloodGroup, this.cnic});
+  
 }

@@ -23,8 +23,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: const Scaffold(
-        body: Center(child: CircularProgressIndicator()), // chhota loading dikhega jab tak controller decide kare
+        body: Center(child: CircularProgressIndicator()),
       ),
     );
   }
 }
+

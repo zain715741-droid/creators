@@ -114,6 +114,7 @@ class Loginctrl extends GetxController {
 
 
 
+  // ignore: strict_top_level_inference
   Future<void> loginbutton(email, passs) async {
     final auth = FirebaseAuth.instance;
 
