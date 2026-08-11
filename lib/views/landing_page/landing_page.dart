@@ -1,54 +1,90 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class LandingPage extends StatefulWidget {
-  const LandingPage({super.key, this.password, this.email,});
-  final String? password;
-  final String? email;
+class LandingPage extends StatelessWidget {
+  const LandingPage({super.key});
 
-  @override
-  State<LandingPage> createState() => _LandingPageState();
-}
-
-class _LandingPageState extends State<LandingPage> {
- var arrName=['Ali','Ahmad','Zain','Fahad','Akram','Ahsan','Murtaza'];
-
-final firestore = FirebaseFirestore.instance.collection('student').snapshots();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final firestore =
+        FirebaseFirestore.instance.collection('student').snapshots();
 
-      body: SafeArea(
-        child: Center(
-          child: StreamBuilder(stream: firestore, builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return CircularProgressIndicator();
-            }
-            if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            }
-            if(snapshot.connectionState==ConnectionState.waiting){
-              return CircularProgressIndicator();
-            }
-            final students = snapshot.data!.docs;
-            return ListView.builder(
-              itemCount: students.length,
-              itemBuilder: (context, index) {
-                final student = students[index];
-                return ListTile(
-                  leading: Text(student['bloodGroup'] ?? 'No bloodGroup'),
-                  title: Text(student['name'] ?? 'No Name'),
-                  subtitle: Text(students[index]['email'] ?? 'No email'),
-                  trailing: Text(students[index]['phone'] ?? 'No phone'),
-                  
-                );
-              }
-            );
-          })
-        ),
+    return Scaffold(
+      backgroundColor: const Color(0xffF5F7FB),
+      appBar: AppBar(
+        title: const Text('Students'),
+        backgroundColor: const Color(0xff667EEA),
+        foregroundColor: Colors.white,
       ),
 
+      body: StreamBuilder(
+        stream: firestore,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final email = FirebaseAuth.instance.currentUser?.email;
+
+          final students = snapshot.data!.docs
+              .where((student) => student['email'] != email)
+              .toList();
+
+          return ListView.builder(
+            padding: const EdgeInsets.all(12),
+            itemCount: students.length,
+            itemBuilder: (context, index) {
+              final student = students[index];
+
+              return Card(
+                elevation: 3,
+                margin: const EdgeInsets.only(bottom: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                
+                child: ListTile(
+                  contentPadding: const EdgeInsets.all(12),
+                  leading: CircleAvatar(
+                    radius: 28,
+                    backgroundColor: const Color(0xff667EEA),
+                    child: Text(
+                      student['name'][0].toUpperCase(),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+
+                  title: Text(
+                    student['name'] ?? 'No Name',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  subtitle: Text(
+                    '${student['email']}\n📱 ${student['phone']}',
+                  ),
+
+                  trailing: Text(
+                    student['bloodGroup'] ?? 'N/A',
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ),
 // body: SafeArea(
 //   child: CustomScrollView(
 //      slivers: [
